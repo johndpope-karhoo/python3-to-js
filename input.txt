@@ -1,0 +1,3 @@
+print("twoja stara")
+def funkcja(arg1, arg2):
+	dasdo = 5

@@ -10,4 +10,49 @@ class ToJSVisitor(Python3Visitor):
         self.result_buffer += 'console.log({ctx});\n'.format(ctx=ctx.expr().getText())
 
     def visitFunction_def(self, ctx):
-        import ipdb; ipdb.set_trace()
+        self.result_buffer += '\nfunction {name}('.format(name=ctx.ID().getText())
+        if ctx.arguments():
+            self.result_buffer += ctx.arguments().getText()
+        self.result_buffer += ') {\n'
+        self.visit(ctx.function_body())
+        self.result_buffer += '}\n\n'
+
+    def visitAssignment(self, ctx):
+        self.result_buffer += 'var {id} = '.format(id=ctx.ID().getText())
+        self.visit(ctx.expr())
+        self.result_buffer += ';\n'
+
+    def visitFunc_stat(self, ctx):
+        self.result_buffer += '\t'
+        super(ToJSVisitor, self).visitFunc_stat(ctx)
+
+    def visitReturn_stat(self, ctx):
+        self.result_buffer += 'return '
+        self.visit(ctx.expr())
+        self.result_buffer += ';\n'
+
+    def visitParExpr(self, ctx):
+        self.result_buffer += '('
+        self.visit(ctx.expr())
+        self.result_buffer += ')'
+
+    def visitNumberAtom(self, ctx):
+        self.result_buffer += ctx.getText()
+
+    def visitStringAtom(self, ctx):
+        self.result_buffer += ctx.getText()
+
+    def visitNilAtom(self, ctx):
+        self.result_buffer += "null"
+
+    def visitIdAtom(self, ctx):
+        self.result_buffer += ctx.getText()
+
+    def visitBooleanAtom(self, ctx):
+        if ctx.TRUE():
+            self.result_buffer += "true"
+        elif ctx.FALSE():
+            self.result_buffer += "false"
+
+    def visitFuncCallAtom(self, ctx):
+        self.result_buffer += ctx.getText()

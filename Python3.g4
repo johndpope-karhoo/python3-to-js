@@ -3,7 +3,10 @@ grammar Python3;
 parse: stat* EOF;
 
 // Statements and the whole rest
-stat: assignment | print | function_def | OTHER {print("unknown char: " + OTHER.text);};
+//stat: assignment | print | function_def | OTHER {print("unknown char: " + OTHER.text);};
+stat: assignment | print | function_def;
+
+func_stat: stat | PASS | return_stat;
 
 assignment: ID ASSIGN expr;
 
@@ -13,23 +16,21 @@ function_def: DEF ID LPAR arguments? RPAR COL function_body;
 
 arguments: ID (',' ID)*;
 
-function_body: TAB assignment;
+function_body: (TAB func_stat)+ ;
+
+return_stat: RETURN expr;
 
 expr
-// : expr POW expr                        #powerExpression
-// | MINUS expr                           #minusExpression
-// | NOT expr                             #notExpression
-// | expr op=(MUL | DIV | MOD) expr      #multiplicationExpression
-// | expr op=(PLUS | MINUS) expr          #additionExpression
-// | expr op=(LTE | GTE | LT | GT) expr #comparisonExpression
-// | expr op=(EQ | NEQ) expr              #equalityExpression
-// | expr AND expr                        #andExpr
-// | expr OR expr                         #orExpr
- : atom                                 #atomExpr
+ : MINUS expr                           #minusExpr
+// | NOT expr                             #notExpr
+// | expr op=(MUL | DIV | MOD) expr      #mulExpr
+// | expr op=(PLUS | MINUS) expr          #addExpr
+ | atom                                 #atomExpr
  ;
 
 atom
- : LPAR expr RPAR #parExpr
+ : ID LPAR arguments? RPAR #funcCallAtom
+ | LPAR expr RPAR #parExpr
  | (INT | FLOAT)  #numberAtom
  | (TRUE | FALSE) #booleanAtom
  | ID             #idAtom
@@ -38,20 +39,11 @@ atom
  ;
 
 // Operators
-OR : 'or';
-AND : 'and';
-EQ : '==';
-NEQ : '!=';
-GT : '>';
-LT : '<';
-GTE : '>=';
-LTE : '<=';
 PLUS : '+';
 MINUS : '-';
 MUL : '*';
 DIV : '/';
 MOD : '%';
-POW : '^';
 NOT : '!';
 ASSIGN : '=';
 

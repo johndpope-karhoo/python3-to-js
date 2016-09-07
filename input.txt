@@ -1,3 +1,21 @@
 print("twoja stara")
 def funkcja(arg1, arg2):
-	dasdo = 5
+	first = arg1
+	second = arg2
+	return first
+
+def funkcja2():
+	print("sth")
+	lala = 6
+	return lala
+
+def funkcja_pusta():
+	pass
+
+true_var = True
+false_var = False
+string_var = "some string"
+int_var = 123
+float_var = 123.456
+parentheses = (True)
+func_call = something()

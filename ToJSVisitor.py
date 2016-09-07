@@ -31,7 +31,7 @@ class ToJSVisitor(Python3Visitor):
         self.visit(ctx.expr())
         self.result_buffer += ';\n'
 
-    def visitParExpr(self, ctx):
+    def visitParAtom(self, ctx):
         self.result_buffer += '('
         self.visit(ctx.expr())
         self.result_buffer += ')'
@@ -55,4 +55,17 @@ class ToJSVisitor(Python3Visitor):
             self.result_buffer += "false"
 
     def visitFuncCallAtom(self, ctx):
+        self.result_buffer += ctx.getText()
+
+    def visitNotExpr(self, ctx):
+        self.result_buffer += '!'
+        self.visit(ctx.expr())
+
+    def visitMulExpr(self, ctx):
+        self.result_buffer += ctx.getText()
+
+    def visitAddExpr(self, ctx):
+        self.result_buffer += ctx.getText()
+
+    def visitMinusExpr(self, ctx):
         self.result_buffer += ctx.getText()

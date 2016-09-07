@@ -22,20 +22,20 @@ return_stat: RETURN expr;
 
 expr
  : MINUS expr                           #minusExpr
-// | NOT expr                             #notExpr
-// | expr op=(MUL | DIV | MOD) expr      #mulExpr
-// | expr op=(PLUS | MINUS) expr          #addExpr
+ | NOT expr                             #notExpr
+ | expr op=(MUL | DIV) expr             #mulExpr
+ | expr op=(PLUS | MINUS) expr          #addExpr
  | atom                                 #atomExpr
  ;
 
 atom
- : ID LPAR arguments? RPAR #funcCallAtom
- | LPAR expr RPAR #parExpr
- | (INT | FLOAT)  #numberAtom
- | (TRUE | FALSE) #booleanAtom
- | ID             #idAtom
- | STRING         #stringAtom
- | NONE           #nilAtom
+ : ID LPAR arguments? RPAR  #funcCallAtom
+ | LPAR expr RPAR           #parAtom
+ | (INT | FLOAT)            #numberAtom
+ | (TRUE | FALSE)           #booleanAtom
+ | ID                       #idAtom
+ | STRING                   #stringAtom
+ | NONE                     #nilAtom
  ;
 
 // Operators
@@ -43,8 +43,7 @@ PLUS : '+';
 MINUS : '-';
 MUL : '*';
 DIV : '/';
-MOD : '%';
-NOT : '!';
+NOT : 'not';
 ASSIGN : '=';
 
 // Types

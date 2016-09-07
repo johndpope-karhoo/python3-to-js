@@ -19,3 +19,10 @@ int_var = 123
 float_var = 123.456
 parentheses = (True)
 func_call = something()
+
+add = 123 + 456
+minus = -123
+sub = 256 - 128
+div = 256 / 8
+mul = 8 * 8
+neg = not False

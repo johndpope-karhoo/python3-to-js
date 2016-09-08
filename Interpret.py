@@ -10,25 +10,14 @@ class Interpreter(Python3Visitor):
         print(self.visit(ctx.expr()))
 
     def visitFunction_def(self, ctx):
-        pass
-    #     self.result_buffer += '\nfunction {name}('.format(name=ctx.ID().getText())
-    #     if ctx.arguments():
-    #         self.result_buffer += ctx.arguments().getText()
-    #     self.result_buffer += ') {\n'
-    #     self.visit(ctx.function_body())
-    #     self.result_buffer += '}\n\n'
-    #
+        func_args = [arg for arg in ctx.arguments().getText().split(',')] if ctx.arguments() else []
+        self.vars[ctx.ID().getText()] = (ctx.function_body(), func_args)
+
     def visitAssignment(self, ctx):
         self.vars[ctx.ID().getText()] = self.visit(ctx.expr())
-    #
-    # def visitFunc_stat(self, ctx):
-    #     self.result_buffer += '\t'
-    #     super(ToJSVisitor, self).visitFunc_stat(ctx)
-    #
-    # def visitReturn_stat(self, ctx):
-    #     self.result_buffer += 'return '
-    #     self.visit(ctx.expr())
-    #     self.result_buffer += ';\n'
+
+    def visitReturn_stat(self, ctx):
+        return self.visit(ctx.expr())
 
     def visitNumberAtom(self, ctx):
         num = ctx.getText()
@@ -48,10 +37,34 @@ class Interpreter(Python3Visitor):
             return True
         elif ctx.FALSE():
             return False
-    #
-    # def visitFuncCallAtom(self, ctx):
-    #     self.result_buffer += ctx.getText()
-    #
+
+    def visitFuncCallAtom(self, ctx):
+        func = self.vars.get(ctx.ID().getText())
+        if not func:
+            print('Nie znaleziono funkcji w vars (brak definicji?)')
+            return
+
+        if len(func[1]) > 0 and not ctx.call_arguments():
+            print('Nie podano argumentow funkcji')
+            return
+
+        if ctx.call_arguments():
+            call_args_atoms = ctx.call_arguments().atom()
+
+            if len(call_args_atoms) != len(func[1]):
+                print('Nieidentyczna liczba podanych argumentow wzgledem definicji funkcji')
+                return
+
+            for name, value in zip(func[1], [self.visit(arg) for arg in call_args_atoms]):
+                self.vars[name] = value
+
+        result = self.visit(func[0])
+
+        for name in func[1]:
+            if name in self.vars:
+                del self.vars[name]
+
+        return result
 
     def visitNotExpr(self, ctx):
         return not self.visit(ctx.expr())
@@ -74,9 +87,9 @@ class Interpreter(Python3Visitor):
 
     def visitMinusExpr(self, ctx):
         return -(self.visit(ctx.expr()))
-    #
-    # def visitFor_stat(self, ctx):
-    #     self.result_buffer += "for (var {it} = 0; i < {range}; i++) {{\n".format(it=ctx.ID().getText(),
-    #                                                                              range=ctx.INT().getText())
-    #     self.visit(ctx.for_body())
-    #     self.result_buffer += "}\n"
+
+    def visitFor_stat(self, ctx):
+        for i in range(int(ctx.INT().getText())):
+            self.vars['i'] = i
+            self.visit(ctx.for_body())
+        del self.vars['i']

@@ -15,6 +15,8 @@ function_def: DEF ID LPAR arguments? RPAR COL function_body;
 
 arguments: ID (',' ID)*;
 
+call_arguments: atom (',' atom)*;
+
 function_body: (TAB func_stat)+;
 
 return_stat: RETURN expr;
@@ -32,7 +34,7 @@ expr
  ;
 
 atom
- : ID LPAR arguments? RPAR  #funcCallAtom
+ : ID LPAR call_arguments? RPAR  #funcCallAtom
  | (INT | FLOAT)            #numberAtom
  | (TRUE | FALSE)           #booleanAtom
  | ID                       #idAtom

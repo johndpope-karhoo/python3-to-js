@@ -1,0 +1,74 @@
+def funkcja1(arg1, arg2):
+	first = arg1
+	second = arg2
+	return first + second
+
+def funkcja2():
+	for i in range(5):
+	    print(i)
+	return True
+
+def funkcja_pusta():
+	pass
+
+
+print("wykonane przypisanie, w nowej linijce odczytana wartosc")
+
+print("true_var = True")
+true_var = True
+print(true_var)
+
+print("false_var = False")
+false_var = False
+print(false_var)
+
+print("string_var = 'some string' ")
+string_var = "some string"
+print(string_var)
+
+print("int_var = 123")
+int_var = 123
+print(int_var)
+
+print("float_var = 123.456")
+float_var = 123.456
+print(float_var)
+
+print("other = int_var")
+other = int_var
+print(other)
+
+print("wywolania funkcji")
+
+print("funkcja1 z argumentami 1 i 2 (wynik to dodawanie obu argumentow)")
+func_call = funkcja1(1,2)
+print(func_call)
+
+print("funkcja2 bez argumentow, powinna zostac wyprintowana iteracja od 0 do 4, a wynik dzialania funkcji to True")
+func_call2 = funkcja2()
+print(func_call2)
+
+print("operacje arytmetyczne")
+print("add = 123 + 456")
+add = 123 + 456
+print(add)
+
+print("minus = -123")
+minus = -123
+print(minus)
+
+print("sub = 256 - 128")
+sub = 256 - 128
+print(sub)
+
+print("div = 256 / 8")
+div = 256 / 8
+print(div)
+
+print("mul = 8 * 8")
+mul = 8 * 8
+print(mul)
+
+print("neg = not False")
+neg = not False
+print(neg)

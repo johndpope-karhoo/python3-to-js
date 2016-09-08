@@ -15,7 +15,6 @@ def main(argv):
     tree = parser.parse()
     visitor = Interpreter()
     visitor.visit(tree)
-    pprint.pprint(visitor.vars)
 
 if __name__ == '__main__':
     main(sys.argv)

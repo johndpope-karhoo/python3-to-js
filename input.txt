@@ -1,4 +1,5 @@
 print("przykladowy tekst")
+
 def funkcja(arg1, arg2):
 	first = arg1
 	second = arg2
@@ -7,17 +8,21 @@ def funkcja(arg1, arg2):
 def funkcja2():
 	for i in range(5):
 	    print(i)
-	return true
+	return True
 
 def funkcja_pusta():
 	pass
+
+for i in range(5):
+	print(i)
 
 true_var = True
 false_var = False
 string_var = "some string"
 int_var = 123
 float_var = 123.456
-func_call = funkcja2()
+func_call = funkcja(1,2)
+func_call2 = funkcja2()
 other = int_var
 
 add = 123 + 456

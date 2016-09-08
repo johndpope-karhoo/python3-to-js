@@ -31,11 +31,6 @@ class ToJSVisitor(Python3Visitor):
         self.visit(ctx.expr())
         self.result_buffer += ';\n'
 
-    def visitParAtom(self, ctx):
-        self.result_buffer += '('
-        self.visit(ctx.expr())
-        self.result_buffer += ')'
-
     def visitNumberAtom(self, ctx):
         self.result_buffer += ctx.getText()
 

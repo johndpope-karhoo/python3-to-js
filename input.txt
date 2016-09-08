@@ -17,8 +17,8 @@ false_var = False
 string_var = "some string"
 int_var = 123
 float_var = 123.456
-parentheses = (True)
 func_call = funkcja2()
+other = int_var
 
 add = 123 + 456
 minus = -123

@@ -33,7 +33,6 @@ expr
 
 atom
  : ID LPAR arguments? RPAR  #funcCallAtom
- | LPAR expr RPAR           #parAtom
  | (INT | FLOAT)            #numberAtom
  | (TRUE | FALSE)           #booleanAtom
  | ID                       #idAtom

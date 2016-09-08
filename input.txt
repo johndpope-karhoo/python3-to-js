@@ -1,13 +1,13 @@
-print("twoja stara")
+print("przykladowy tekst")
 def funkcja(arg1, arg2):
 	first = arg1
 	second = arg2
-	return first
+	return first + second
 
 def funkcja2():
-	print("sth")
-	lala = 6
-	return lala
+	for i in range(5):
+	    print(i)
+	return true
 
 def funkcja_pusta():
 	pass
@@ -18,7 +18,7 @@ string_var = "some string"
 int_var = 123
 float_var = 123.456
 parentheses = (True)
-func_call = something()
+func_call = funkcja2()
 
 add = 123 + 456
 minus = -123

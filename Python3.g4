@@ -3,8 +3,7 @@ grammar Python3;
 parse: stat* EOF;
 
 // Statements and the whole rest
-//stat: assignment | print | function_def | OTHER {print("unknown char: " + OTHER.text);};
-stat: assignment | print | function_def;
+stat: assignment | print | function_def | for_stat;
 
 func_stat: stat | PASS | return_stat;
 
@@ -16,9 +15,13 @@ function_def: DEF ID LPAR arguments? RPAR COL function_body;
 
 arguments: ID (',' ID)*;
 
-function_body: (TAB func_stat)+ ;
+function_body: (TAB func_stat)+;
 
 return_stat: RETURN expr;
+
+for_stat: FOR ID IN RANGE LPAR INT RPAR COL for_body;
+
+for_body: (TAB stat)+;
 
 expr
  : MINUS expr                           #minusExpr
@@ -66,6 +69,9 @@ PRINT : 'print';
 DEF: 'def';
 RETURN: 'return';
 PASS: 'pass';
+FOR: 'for';
+IN: 'in';
+RANGE: 'range';
 
 ID: [a-zA-Z_] [a-zA-Z_0-9]*;
 

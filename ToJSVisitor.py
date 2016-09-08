@@ -69,3 +69,9 @@ class ToJSVisitor(Python3Visitor):
 
     def visitMinusExpr(self, ctx):
         self.result_buffer += ctx.getText()
+
+    def visitFor_stat(self, ctx):
+        self.result_buffer += "for (var {it} = 0; i < {range}; i++) {{\n".format(it=ctx.ID().getText(),
+                                                                                 range=ctx.INT().getText())
+        self.visit(ctx.for_body())
+        self.result_buffer += "}\n"
